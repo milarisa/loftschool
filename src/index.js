@@ -17,7 +17,7 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
-    if (!array || !Array.isArray(array) || array.length === 0) {
+    if (!array || !(array instanceof Array) || array.length === 0) {
         throw new Error('empty array');
     }
 
@@ -125,43 +125,28 @@ function calculator(number = 0) {
 
     return {
         sum: function (...args) {
-            let result = number;
-
-            for (let i of args) {
-                result += i;
-            }
-
-            return result;
+            return args.reduce(function (prev, cur) {
+                return prev + cur;
+            }, number);
         },
         dif: function (...args) {
-            let result = number;
-
-            for (let i of args) {
-                result -= i;
-            }
-
-            return result;
+            return args.reduce(function (prev, cur) {
+                return prev - cur;
+            }, number);
         },
         div: function (...args) {
-            let result = number;
-
-            for (let i of args) {
-                if (i === 0) {
+            return args.reduce(function (prev, cur) {
+                if (cur === 0) {
                     throw new Error('division by 0');
                 }
-                result /= i;
-            }
 
-            return result;
+                return prev / cur;
+            }, number);
         },
         mul: function (...args) {
-            let result = number;
-
-            for (let i of args) {
-                result *= i;
-            }
-
-            return result;
+            return args.reduce(function (prev, cur) {
+                return prev * cur;
+            }, number);
         }
     };
 }
