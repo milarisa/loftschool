@@ -27,7 +27,7 @@ function createDivWithText(text) {
    prepend(document.querySelector('#one'), document.querySelector('#two')) // добавит элемент переданный первым аргументом в начало элемента переданного вторым аргументом
  */
 function prepend(what, where) {
-    where.insertBefore(what, where.firstChild);
+    where.prepend(what);
 }
 
 /*
@@ -72,13 +72,7 @@ function findAllPSiblings(where) {
    findError(document.body) // функция должна вернуть массив с элементами 'привет' и 'loftschool'
  */
 function findError(where) {
-    var result = [];
-
-    for (var child of where.children) {
-        result.push(child.innerText);
-    }
-
-    return result;
+    return [...where.children].map(elem => elem.innerText);
 }
 
 /*
