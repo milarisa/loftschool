@@ -156,10 +156,10 @@ function collectDOMStat(root) {
         return;
       }
   
-      statistic.tags[elem.tagName] = statistic.tags[elem.tagName] === undefined ? 1 : ++statistic.tags[elem.tagName];
+      statistic.tags[elem.tagName] = !statistic.tags[elem.tagName] ? 1 : ++statistic.tags[elem.tagName];
       
       elem.classList.forEach(value => {
-        statistic.classes[value] = statistic.classes[value] === undefined ? 1 : ++statistic.classes[value];
+        statistic.classes[value] = !statistic.classes[value] ? 1 : ++statistic.classes[value];
       });
 
       getState(elem);
