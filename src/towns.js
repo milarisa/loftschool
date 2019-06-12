@@ -73,7 +73,19 @@ const filterInput = homeworkContainer.querySelector('#filter-input');
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
 
+// Блок с сообщением в случае неуспешной загрузки
 let errorBlock = document.createElement('div');
+errorBlock.style.display = 'none';
+
+let messageElem = document.createElement('div');
+messageElem.innerText = 'Не удалось загрузить города';
+
+let reloadBtn = document.createElement('button');
+reloadBtn.innerText = 'Повторить';
+reloadBtn.addEventListener('click', displayTowns);
+
+errorBlock.append(messageElem);
+errorBlock.append(reloadBtn);
 homeworkContainer.append(errorBlock);
 
 let towns;
@@ -100,24 +112,16 @@ filterInput.addEventListener('keyup', function() {
 });
 
 function displayTowns() {
-    errorBlock.innerHTML = '';
     loadingBlock.style.display = 'block';
 
     loadTowns()
         .then(result => {
             towns = result;
             filterBlock.style.display = 'block';
+            errorBlock.style.display = 'none';
         })
         .catch(() => {
-            let messageElem = document.createElement('div');
-            messageElem.innerText = 'Не удалось загрузить города';
-
-            let reloadBtn = document.createElement('button');
-            reloadBtn.innerText = 'Повторить';
-            reloadBtn.addEventListener('click', displayTowns);
-
-            errorBlock.append(messageElem);
-            errorBlock.append(reloadBtn);
+            errorBlock.style.display = 'block';
         });
 
     loadingBlock.style.display = 'none';
