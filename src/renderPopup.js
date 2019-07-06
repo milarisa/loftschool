@@ -53,7 +53,7 @@ export default async function renderPopup (clusterer, address, mapCoords, docume
 
         let review = new Review(mapCoords[0], mapCoords[1], fullAddress, nameValue, placeValue, textValue, dateValue);
 
-        clusterer.add(placeMark(mapCoords[0], mapCoords[1]));
+        clusterer.add(placeMark(clusterer, mapCoords[0], mapCoords[1]));
         saveReview(review);
 
         // clear input values

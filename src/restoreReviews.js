@@ -13,7 +13,7 @@ export default (clusterer) => {
         let reviews = r.value;
         window.reviewsMap.set(r.key, reviews);
         reviews.forEach(rev => {
-            clusterer.add(placeMark(rev.coords[0], rev.coords[1]));
+            clusterer.add(placeMark(clusterer, rev.coords[0], rev.coords[1]));
         })
     });
 }
