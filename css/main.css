@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.geoobject {
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+
+    height: 330px;
+    width: 280px;
+    background-color: goldenrod;
+}
