@@ -4,6 +4,6 @@ export default async (coords) => {
     
     const featureMember = result.response.GeoObjectCollection.featureMember;
     const address = featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.Address;
-        
+    
     return address;
 }

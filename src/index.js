@@ -1,6 +1,5 @@
 import renderPopup from "./renderPopup";
 import restoreReviews from "./restoreReviews";
-import mapCoordsToPage from "./mapCoordsToPage";
 
 ymaps.ready(init);
 
@@ -9,14 +8,6 @@ function init() {
         center: [55.76, 37.64],
         zoom: 10
     });
-
-    // Создаем собственный макет с информацией о выбранном геообъекте.
-    var customItemContentLayout = ymaps.templateLayoutFactory.createClass(
-        // Флаг "raw" означает, что данные вставляют "как есть" без экранирования html.
-        '<h2 class=ballon_header>{{ properties.balloonContentHeader|raw }}</h2>' +
-            '<div class=ballon_body>{{ properties.balloonContentBody|raw }}</div>' +
-            '<div class=ballon_footer>{{ properties.balloonContentFooter|raw }}</div>'
-    );
 
     let myClusterer = new ymaps.Clusterer({
         clusterDisableClickZoom: true,
@@ -27,6 +18,15 @@ function init() {
         clusterBalloonContentLayoutHeight: 130,
         clusterBalloonPagerSize: 5
     });
+
+    myClusterer.events.add('click', event => {
+        // remove openned geoobject element on page
+        let curPopupElem = document.querySelector('.geoobject');
+        if (curPopupElem) {
+            document.body.removeChild(curPopupElem);
+        }
+    })
+
     myMap.geoObjects.add(myClusterer);
 
     restoreReviews(myClusterer);
@@ -54,7 +54,7 @@ function init() {
                 return;
             
             const mapCoords = [coordX, coordY];
-            const pageCoords = mapCoordsToPage(myMap, mapCoords);
+            const pageCoords = [event.clientX, event.clientY];
 
             myMap.balloon.close();
 

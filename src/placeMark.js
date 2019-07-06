@@ -12,6 +12,8 @@ export default (clusterer, review) => {
     });
 
     placeMark.events.add('click', async event => {
+        event.preventDefault();
+        
         const mapCoords = placeMark.geometry.getCoordinates();
 
         const domEvent = event._sourceEvent.originalEvent.domEvent.originalEvent;

@@ -6,6 +6,7 @@
 html,
 body {
   height: 100%;
+  overflow: hidden;
 }
 
 #map {
@@ -15,10 +16,117 @@ body {
 
 .geoobject {
     position: absolute;
-    /* top: 0;
-    left: 0; */
+    height: 520px;
+    width: 380px;
+    border-radius: 25px;
+    background-color: #fff;
+}
 
-    height: 330px;
-    width: 280px;
-    background-color: goldenrod;
+.geoobject-header {
+    height: 45px;
+    background-color: #ff8663;
+    color: #fff;
+    line-height: 45px;
+}
+
+.icon {
+    height: 45px;
+    /* display: inline-block; */
+    float: left;
+    text-align: center;
+    vertical-align: baseline;
+
+}
+
+.marker {
+    margin-left: 15px;
+    margin-right: 7px;
+}
+
+.address {
+    float: left;
+    font-size: 12px;
+}
+
+.exit {
+    float: right;
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+.reviews-block {
+    padding-top: 15px;
+    height: 155px;
+    width: 350px;
+    margin: 0 auto;
+    overflow: scroll;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f0f0f0;
+    color: #4f4f4f;
+    overflow-x: hidden;
+}
+
+.review {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.review-header {
+    margin-bottom: 7px;
+}
+
+.review-name {
+    margin-right: 5px;
+    font-weight: bold;    
+}
+
+.review-place {
+    margin-right: 5px;
+    color: #7b7b7b;
+}
+
+.review-date {
+    color: #7b7b7b;
+}
+
+.feedback {
+    margin: 0 auto;
+    width: 350px;
+    box-sizing: border-box;
+}
+
+.feedback-title {
+    margin-top: 15px;
+    text-transform: uppercase;
+    color: #ff8663;
+    font-weight: bold;
+    font-size: 16px;    
+}
+
+.field {
+    margin-top: 15px;
+    padding: 0 15px;
+    height: 34px;
+    width: 350px;
+    border: 1px solid #c4c4c4;
+    border-radius: 25px;
+    box-sizing: border-box;
+}
+
+.feedback-text {
+    padding-top: 10px;
+    height: 110px;
+    font-family: Sans-serif;
+    resize: none;
+}
+
+.feedback-btn {
+    margin-top: 5px;
+    float: right;
+    height: 30px;
+    width: 87px;
+    background-color: #ff8663;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
 }
