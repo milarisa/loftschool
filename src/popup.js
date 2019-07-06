@@ -10,8 +10,8 @@ const source = `
   {{#each reviews}}
   <div class="review">
     <div class="review-header">
-      <div class="review-name">{{placeName}}</div>
-      <div class="review-place">{{address}}</div>
+      <div class="review-name">{{name}}</div>
+      <div class="review-place">{{place}}</div>
       <div class="review-date">{{date}}</div>
     </div>
     <div class="review-text">{{text}}</div>

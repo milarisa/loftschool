@@ -6,20 +6,24 @@ import placeMark from "./placeMark";
 import saveReview from "./saveReview";
 import Review from "./review";
 
-export default async (clusterer, mapCoords, documentCoords) => {
+export default async function renderPopup (clusterer, address, mapCoords, documentCoords) {
     // remove current geoobject element on page if exists
     let curPopupElem = document.querySelector('.geoobject');
     if (curPopupElem) {
         document.body.removeChild(curPopupElem);
     }
 
-    // let reviews = [];
     // get exists markers with received coordinates
     let reviews = getReviews(mapCoords);
-    // markers.forEach(r => reviews.push(r));
 
-    let addressObject = await getAddressByCoords(mapCoords);
-    let fullAddress = getFullAddress(addressObject);
+    let fullAddress;
+    if (!address) {
+        let addressObject = await getAddressByCoords(mapCoords);
+        fullAddress = getFullAddress(addressObject);
+    } else {
+        fullAddress = address;
+    }
+    
 
     let popupElem = await popup(fullAddress, reviews, documentCoords);
 
@@ -29,7 +33,7 @@ export default async (clusterer, mapCoords, documentCoords) => {
     let textInput = popupElem.getElementsByClassName('feedback-text')[0];
     let form = popupElem.getElementsByClassName('feedback')[0];
 
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', async event => {
         event.preventDefault();
 
         let nameValue = nameInput.value;
@@ -47,8 +51,7 @@ export default async (clusterer, mapCoords, documentCoords) => {
         //     text: textValue
         // };
 
-        // let marker = new Marker(mapCoords[0], mapCoords[1], fullAddress, newReview);
-        let review = new Review(mapCoords[0], mapCoords[1], fullAddress, nameValue, textValue, dateValue);
+        let review = new Review(mapCoords[0], mapCoords[1], fullAddress, nameValue, placeValue, textValue, dateValue);
 
         clusterer.add(placeMark(mapCoords[0], mapCoords[1]));
         saveReview(review);
@@ -58,7 +61,11 @@ export default async (clusterer, mapCoords, documentCoords) => {
         placeInput.value = '';
         textInput.value = '';
         
+        // refresh reviews on popup
+        await renderPopup(clusterer, fullAddress, mapCoords, documentCoords);
     });
 
     document.body.append(popupElem);
 }
+
+// export default renderPopup;

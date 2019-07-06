@@ -22,6 +22,6 @@ function init() {
         const domEvent = event._sourceEvent.originalEvent.domEvent.originalEvent;
         const documentCoords = [domEvent.clientX, domEvent.clientY];
         
-        await renderPopup(myClusterer, mapCoords, documentCoords);
+        await renderPopup(myClusterer, undefined, mapCoords, documentCoords);
     });
 }
