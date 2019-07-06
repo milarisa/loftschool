@@ -1,4 +1,5 @@
 import renderPopup from "./renderPopup";
+import restoreReviews from "./restoreReviews";
 
 ymaps.ready(init);
 
@@ -13,13 +14,13 @@ function init() {
     );
     myMap.geoObjects.add(myClusterer);
 
+    restoreReviews(myClusterer);
+
     myMap.events.add('click', async function (event) {
         let mapCoords = event.get('coords');
 
         const domEvent = event._sourceEvent.originalEvent.domEvent.originalEvent;
         const documentCoords = [domEvent.clientX, domEvent.clientY];
-        
-        console.log(documentCoords);
         
         await renderPopup(myClusterer, mapCoords, documentCoords);
     });

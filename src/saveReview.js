@@ -1,4 +1,5 @@
 import getReviews from "./getReviews";
+import addReviewToStorage from "./addReviewToStorage";
 
 export default (review) => {
     if (!window.reviewsMap)
@@ -9,4 +10,6 @@ export default (review) => {
 
     let coords = review.coords;
     window.reviewsMap.set(`${coords[0]}-${coords[1]}`, reviewsCollection);
+
+    addReviewToStorage(window.reviewsMap);
 }
