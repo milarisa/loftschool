@@ -21,7 +21,7 @@ export default (clusterer, review) => {
         const domEvent = event._sourceEvent.originalEvent.domEvent.originalEvent;
         const documentCoords = [domEvent.clientX, domEvent.clientY];
         
-        await renderPopup(clusterer, undefined, mapCoords, documentCoords);
+        await renderPopup(clusterer, mapCoords, documentCoords);
     });
 
     return placeMark;

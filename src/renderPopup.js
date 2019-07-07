@@ -6,7 +6,7 @@ import placeMark from "./placeMark";
 import saveReview from "./saveReview";
 import Review from "./review";
 
-export default async function renderPopup (clusterer, address, mapCoords, pageCoords) {
+export default async function renderPopup (clusterer, mapCoords, pageCoords, address) {
     // remove current geoobject element on page if exists
     let curPopupElem = document.querySelector('.geoobject');
     if (curPopupElem) {
@@ -62,7 +62,7 @@ export default async function renderPopup (clusterer, address, mapCoords, pageCo
         textInput.value = '';
         
         // refresh reviews on popup
-        await renderPopup(clusterer, fullAddress, mapCoords, pageCoords);
+        await renderPopup(clusterer, mapCoords, pageCoords, fullAddress);
     });
 
     document.body.append(popupElem);

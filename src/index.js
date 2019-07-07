@@ -1,5 +1,6 @@
 import renderPopup from "./renderPopup";
 import restoreReviews from "./restoreReviews";
+import clusterer from "./clusterer";
 
 ymaps.ready(init);
 
@@ -9,24 +10,7 @@ function init() {
         zoom: 10
     });
 
-    let myClusterer = new ymaps.Clusterer({
-        clusterDisableClickZoom: true,
-        clusterOpenBalloonOnClick: true,
-        clusterBalloonContentLayout: 'cluster#balloonCarousel',
-        clusterBalloonPanelMaxMapArea: 0,
-        clusterBalloonContentLayoutWidth: 300,
-        clusterBalloonContentLayoutHeight: 200,
-        clusterBalloonPagerSize: 5
-    });
-
-    myClusterer.events.add('click', event => {
-        // remove openned geoobject element on page
-        let curPopupElem = document.querySelector('.geoobject');
-        if (curPopupElem) {
-            document.body.removeChild(curPopupElem);
-        }
-    })
-
+    let myClusterer = clusterer();
     myMap.geoObjects.add(myClusterer);
 
     restoreReviews(myClusterer);
@@ -35,30 +19,33 @@ function init() {
         let mapCoords = event.get('coords');
 
         const domEvent = event._sourceEvent.originalEvent.domEvent.originalEvent;
-        const documentCoords = [domEvent.clientX, domEvent.clientY];
+        const pageCoords = [domEvent.clientX, domEvent.clientY];
         
-        await renderPopup(myClusterer, undefined, mapCoords, documentCoords);
+        await renderPopup(myClusterer, mapCoords, pageCoords);
     });
 
-    document.body.addEventListener('click', async event => {       
-        const target = event.target;
-
+    document.body.addEventListener('click', async () => {
         // handler for click on place link in baloon
-        if (target.classList.contains('placemark-link')) {
-            event.preventDefault();
-
-            const coordX = target.getAttribute('data-coord-x');
-            const coordY = target.getAttribute('data-coord-y');
-
-            if (!coordX || !coordY)
-                return;
-            
-            const mapCoords = [coordX, coordY];
-            const pageCoords = [event.clientX, event.clientY];
-
-            myMap.balloon.close();
-
-            await renderPopup(myClusterer, undefined, mapCoords, pageCoords);
+        if (event.target.classList.contains('placemark-link')) {
+            handlePlacemarkLinkClick(event, myMap, myClusterer);
         }
     });
+}
+
+async function handlePlacemarkLinkClick(event, map, clusterer) {
+    event.preventDefault();
+    const target = event.target;
+
+    const coordX = target.getAttribute('data-coord-x');
+    const coordY = target.getAttribute('data-coord-y');
+
+    if (!coordX || !coordY)
+        return;
+    
+    const mapCoords = [coordX, coordY];
+    const pageCoords = [event.clientX, event.clientY];
+
+    map.balloon.close();
+
+    await renderPopup(clusterer, mapCoords, pageCoords);
 }
