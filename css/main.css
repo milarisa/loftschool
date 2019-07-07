@@ -130,3 +130,12 @@ body {
     border: none;
     border-radius: 7px;
 }
+
+.balloon-text {
+    margin-top: 15px;
+}
+
+.balloon-footer {
+    color: #7b7b7b;
+    float: right;
+}

@@ -1,14 +1,16 @@
 import renderPopup from "./renderPopup";
 
 export default (clusterer, review) => {
-    const baloonContent = `
+    const balloonContent = `
         <a class='placemark-link' href='' data-coord-x='${review.coords[0]}' data-coord-y='${review.coords[1]}'>${review.address}</a>
-        <div>${review.text}</div>`;
+        <div class='balloon-text'>${review.text}</div>`;
 
-    let placeMark = new ymaps.Placemark(review.coords, {
+    const baloonFooter = `<div class='balloon-footer'>${review.date}</div>`;
+
+    const placeMark = new ymaps.Placemark(review.coords, {
         balloonContentHeader: review.place,
-        balloonContentBody: baloonContent,
-        balloonContentFooter: review.date
+        balloonContentBody: balloonContent,
+        balloonContentFooter: baloonFooter
     });
 
     placeMark.events.add('click', async event => {
