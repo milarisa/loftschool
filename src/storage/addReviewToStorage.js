@@ -3,9 +3,6 @@ export default (reviewsMap) => {
         return;
 
     let savedData = [];
-    // for (let m of reviewsMap.values()) {
-    //     savedData.push({key: });
-    // }
 
     for (var [key, value] of reviewsMap) {
         savedData.push({

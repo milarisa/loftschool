@@ -1,4 +1,4 @@
-import placeMark from "./placeMark";
+import placeMark from "../yMapsModel/placeMark";
 
 export default (clusterer) => {
     window.reviewsMap = new Map();

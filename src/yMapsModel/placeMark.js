@@ -1,4 +1,4 @@
-import renderPopup from "./renderPopup";
+import renderPopup from "../renderPopup";
 
 export default (clusterer, review) => {
     const balloonContent = `
@@ -26,4 +26,3 @@ export default (clusterer, review) => {
 
     return placeMark;
 };
-

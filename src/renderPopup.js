@@ -1,13 +1,13 @@
 import popup from "./popup";
-import getFullAddress from "./getFullAddress";
-import getAddressByCoords from "./getAddressByCoords";
-import getReviews from "./getReviews";
-import placeMark from "./placeMark";
-import saveReview from "./saveReview";
+import getFullAddress from "./geocode/getFullAddress";
+import getAddressByCoords from "./geocode/getAddressByCoords";
+import getReviews from "./storage/getReviews";
+import placeMark from "./yMapsModel/placeMark";
+import saveReview from "./storage/saveReview";
 import Review from "./review";
 
-export default async function renderPopup (clusterer, mapCoords, pageCoords, address) {
-    // remove current geoobject element on page if exists
+export default async function renderPopup(clusterer, mapCoords, pageCoords, address) {
+    // remove current popup element on page if exist
     let curPopupElem = document.querySelector('.geoobject');
     if (curPopupElem) {
         document.body.removeChild(curPopupElem);
@@ -22,8 +22,7 @@ export default async function renderPopup (clusterer, mapCoords, pageCoords, add
         fullAddress = getFullAddress(addressObject);
     } else {
         fullAddress = address;
-    }
-    
+    }    
 
     let popupElem = await popup(fullAddress, reviews, pageCoords);
 
@@ -43,14 +42,6 @@ export default async function renderPopup (clusterer, mapCoords, pageCoords, add
         let dateNow = new Date(Date.now());
         let dateValue = `${dateNow.getFullYear()}.${dateNow.getMonth()}.${dateNow.getDate()} ${dateNow.getHours()}:${dateNow.getMinutes()}:${dateNow.getSeconds()}`;
 
-        console.log(nameValue + placeValue + textValue);
-        // let newReview = {
-        //     name: nameValue,
-        //     place: placeValue,
-        //     date: dateValue,
-        //     text: textValue
-        // };
-
         let review = new Review(mapCoords[0], mapCoords[1], fullAddress, nameValue, placeValue, textValue, dateValue);
 
         clusterer.add(placeMark(clusterer, review));
@@ -67,5 +58,3 @@ export default async function renderPopup (clusterer, mapCoords, pageCoords, add
 
     document.body.append(popupElem);
 }
-
-// export default renderPopup;

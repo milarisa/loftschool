@@ -1,21 +1,21 @@
 import renderPopup from "./renderPopup";
-import restoreReviews from "./restoreReviews";
-import clusterer from "./clusterer";
+import restoreReviews from "./storage/restoreReviews";
+import clusterer from "./yMapsModel/clusterer";
 
 ymaps.ready(init);
 
 function init() {
-    let myMap = new ymaps.Map("map", {
+    let map = new ymaps.Map("map", {
         center: [55.76, 37.64],
         zoom: 10
     });
 
     let myClusterer = clusterer();
-    myMap.geoObjects.add(myClusterer);
+    map.geoObjects.add(myClusterer);
 
     restoreReviews(myClusterer);
 
-    myMap.events.add('click', async function (event) {
+    map.events.add('click', async function (event) {
         let mapCoords = event.get('coords');
 
         const domEvent = event._sourceEvent.originalEvent.domEvent.originalEvent;
@@ -26,9 +26,8 @@ function init() {
 
     document.body.addEventListener('click', async () => {
         // handler for click on place link in baloon
-        if (event.target.classList.contains('placemark-link')) {
-            handlePlacemarkLinkClick(event, myMap, myClusterer);
-        }
+        if (event.target.classList.contains('placemark-link'))
+            await handlePlacemarkLinkClick(event, map, myClusterer);        
     });
 }
 

@@ -45,7 +45,7 @@ export default async (address, reviews, documentCoords) => {
     elem.classList.add('geoobject');
     elem.innerHTML = html;
 
-    // set position on document
+    // set popup position on document
     elem.style.top = documentCoords[1] + 'px';
     elem.style.left = documentCoords[0] + 'px';
 
